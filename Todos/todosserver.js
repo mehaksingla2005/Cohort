@@ -39,11 +39,100 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
+
+
+  import express from "express";
+  import bodyParser from "body-parser";
   const app = express();
   
   app.use(bodyParser.json());
-  
-  module.exports = app;
+
+  var todos=[
+    {
+        title:"breakfast",
+        description:"Go for breakfast daily at 8:30 pm.",
+        "completed": false,
+        id:1
+    },
+    {
+        title:"study",
+        description:"Do DSA leetcode and GFG daily question maitain the streak",
+        "completed": false,
+        id:2
+    },
+    {
+        title:"Lunch",
+        description:"lunch at 1:00.",
+        "completed": false,
+        id:3
+    }
+];
+
+let currentId = 4;
+app.get("/todos",function(req,res){
+   
+    res.status(200).json(todos);
+})
+app.get("/todos/:id",function(req,res){
+    const id=parseInt(req.params.id,10);
+    for(let i=0;i<todos.length;i++){
+        if(todos[i].id==id){
+           return res.status(200).json(todos[i]);
+        }
+    }
+    res.status(404).json({ error: "Todo item not found" });
+})
+app.post("/todos",function(req,res){
+    const {title,description,completed}=req.body;
+    const id = currentId++;
+    const newTodo = { title, description, completed, id };
+    todos.push(newTodo);
+
+    res.status(201).json({
+       id
+    })
+})
+
+
+// 4. PUT /todos/:id - Update an existing todo item by ID
+// Description: Updates an existing todo item identified by its ID.
+// Request Body: JSON object representing the updated todo item.
+// Response: 200 OK if the todo item was found and updated, or 404 Not Found if not found.
+// Example: PUT http://localhost:3000/todos/123
+// Request Body: { "title": "Buy groceries", "completed": true }
+
+
+
+app.put("/todos/:id",function(req,res){
+    const todoId=parseInt(req.params.id,10);
+    const updatedTodo=req.body;
+
+    const index=todos.findIndex(todo=>todo.id ===todoId );
+    if(index!==-1){
+        todos[index]={...todos[index],...updatedTodo}; // Merge the updated data into the existing item
+        res.status(200).json(todos[index]);
+    }else{
+        res.status(404).json({ error: "Todo item not found" })
+    }
+})
+
+
+app.delete("/todos/:id",function(req,res){
+    const todoId=parseInt(req.params.id,10);
+    const index=todos.findIndex(todo=>todo.id===todoId);
+    if (index !== -1) {
+        todos.splice(index, 1);
+        res.status(200).json({ message: "Todo item was successfully deleted." });
+    }
+    else{
+        res.status(404).json({ error: "Todo item not found" });
+    }
+})
+
+app.all('*',function(req,res){
+    res.status(404).json({ error: "Route not found" });
+})
+
+ app.listen(3000,()=>{
+    console.log(`server is running on  http://localhost:3000'`)
+ });
