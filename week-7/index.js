@@ -5,7 +5,7 @@ const jwt=require("jsonwebtoken");
 const JWT_SECRET="mehak123";
 const {UserModel,TodoModel} =require("./db");
 
-mongoose.connect("mongodb+srv://singlamehak2005:hZ03I4MXxswLBMYy@cluster0.pze4sai.mongodb.net/todoapp");
+mongoose.connect(process.env.MONGODB_URL)
 const app=express();
 app.use(express.json());
 
