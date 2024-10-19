@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="buttonParent"></div>
+    <script>
+        let state={
+            count:0,
+            color:'red'
+        }
+
+        function onButtonPress(){
+            state.count++;
+            state.color=Math.random()>0.5?'blue':'green';
+            buttonComponentReRender()
+        }
+
+        function buttonComponentReRender(){
+            document.getElementById("buttonParent").innerHTML="";
+            const button=document.createElement("button");
+            button.innerHTML=`counter ${state.count}`;
+            button.style.backgroundColor=state.color;
+            button.setAttribute("onClick",`onButtonPress()`);
+            document.getElementById("buttonParent").appendChild(button);
+        }
+        buttonComponentReRender();
+    </script>
+    
+</body>
+</html>
