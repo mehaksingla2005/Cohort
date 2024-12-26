@@ -1,0 +1,70 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional prettier cache
+.prettierignore
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug files
+*.swp
+*.swo
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Temporary system files
+*.tmp
+*.temp
+*.bak
+
+# IDE specific files
+.vscode/
+.idea/
+*.iml
+
+# Coverage files
+coverage/
+*.lcov
+
+# Test-related
+jest-test-results.json
+.nyc_output/
